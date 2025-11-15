@@ -1,6 +1,6 @@
 {
-  "name": "react-serve-js",
-  "version": "0.6.0",
+  "name": "lithe-run",
+  "version": "0.1.0",
   "description": "React-style backend framework for building APIs with JSX",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,7 +21,8 @@
     "api",
     "express",
     "typescript",
-    "cors"
+    "cors",
+    "lithe"
   ],
   "author": "",
   "license": "MIT",

@@ -1,5 +1,5 @@
 {
-  "name": "react-serve",
+  "name": "lithe",
   "version": "1.0.0",
   "description": "React-style backend framework for building APIs with JSX",
   "private": true,
@@ -13,7 +13,7 @@
     "publish": "npm run build && npm publish --workspaces --exclude=react-serve-basic-example",
     "test": "npm run test --workspaces"
   },
-  "author": "Akinkunmi",
+  "author": "Essinn",
   "license": "MIT",
   "devDependencies": {
     "@types/node": "^20.0.0",

@@ -1,9 +1,9 @@
 {
-  "name": "create-react-serve",
-  "version": "0.2.1",
-  "description": "CLI tool for bootstrapping new ReactServe applications",
+  "name": "lithe-up",
+  "version": "0.1.0",
+  "description": "CLI tool for bootstrapping new Lithe applications",
   "bin": {
-    "create-react-serve": "dist/cli.js"
+    "lithe-up": "dist/cli.js"
   },
   "files": [
     "dist",
@@ -15,7 +15,7 @@
     "prepublishOnly": "npm run build"
   },
   "keywords": [
-    "react-serve",
+    "lithe-run",
     "cli",
     "bootstrap",
     "scaffold",
