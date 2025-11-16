@@ -5,7 +5,6 @@ import { join, resolve } from "path";
 import { readdirSync, existsSync } from "fs";
 import { JSXElement } from ".";
 
-/* ----------  context  ---------- */
 let routeContext: {
   req: Request;
   res: ExRes;
@@ -41,11 +40,9 @@ export function useContext(key: string) {
   return globalContext.get(key);
 }
 
-/* ----------  types  ---------- */
 export type Middleware = (req: Request, next: () => any) => any;
 
-/* ----------  config  ---------- */
-const ROUTES_ROOT = resolve("api"); // change here if you want another dir
+const ROUTES_ROOT = resolve("api"); // change dir here
 let appConfig: { port?: number; cors?: cors.CorsOptions } = {};
 
 /* ----------  file-system walker  ---------- */
@@ -84,9 +81,7 @@ function walk(dir: string, urlPrefix = ""): void {
   }
 }
 
-/* ----------  serve  ---------- */
 export function serve(rootElement: JSXElement) {
-  /* pull port/cors from <App> */
   if (rootElement && typeof rootElement === "object") {
     const props = (rootElement as any).props || {};
     appConfig.port = props.port || 6969;
@@ -160,7 +155,6 @@ export function serve(rootElement: JSXElement) {
       }
     };
 
-  /* register verbs */
   const byPath: Record<string, string[]> = {};
   for (const r of discoveredRoutes) {
     const verbs = [
@@ -195,10 +189,10 @@ export function serve(rootElement: JSXElement) {
     res.status(404).json({ error: "Not Found", path: req.path })
   );
 
-  /* start */
+  // start server
   const port = appConfig.port || 6969;
   const server = app.listen(port, () => {
-    console.log(`🚀 ReactServe file-based at http://localhost:${port}`);
+    console.log(`🚀 Lithe server up on http://localhost:${port}`);
   });
 
   /* hot reload */
