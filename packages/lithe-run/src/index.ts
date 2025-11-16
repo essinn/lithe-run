@@ -7,15 +7,7 @@ export {
 } from "./runtime";
 
 import type { CorsOptions } from "cors";
-
-namespace APIJSX {
-  export interface Element {
-    type: string;
-    props: any;
-  }
-}
-
-export type JSXElement = APIJSX.Element;
+import React from "react";
 
 export function App({
   children,
@@ -25,7 +17,7 @@ export function App({
   children?: any;
   port?: number;
   cors?: boolean | CorsOptions;
-}): APIJSX.Element {
+}): React.ReactElement {
   return { type: "App", props: { children, port, cors } } as any;
 }
 
@@ -38,7 +30,7 @@ interface ResponseProps {
   redirect?: string;
 }
 
-export function Response(props: ResponseProps): APIJSX.Element {
+export function Response(props: ResponseProps): React.ReactElement {
   return { type: "Response", props } as any;
 }
 
@@ -46,7 +38,7 @@ export function Middleware({
   use,
 }: {
   use: import("./runtime").Middleware | import("./runtime").Middleware[];
-}): APIJSX.Element {
+}): React.ReactElement {
   return { type: "Middleware", props: { use } } as any;
 }
 
@@ -56,7 +48,7 @@ interface JSONProps {
   headers?: Record<string, string>;
 }
 
-export function JSON({ data, status, headers }: JSONProps): APIJSX.Element {
+export function JSON({ data, status, headers }: JSONProps): React.ReactElement {
   return Response({ json: data, status, headers });
 }
 
@@ -66,7 +58,7 @@ interface TextProps {
   headers?: Record<string, string>;
 }
 
-export function Text({ text, status, headers }: TextProps): APIJSX.Element {
+export function Text({ text, status, headers }: TextProps): React.ReactElement {
   return Response({ text, status, headers });
 }
 
@@ -76,7 +68,7 @@ interface HTMLProps {
   headers?: Record<string, string>;
 }
 
-export function HTML({ html, status, headers }: HTMLProps): APIJSX.Element {
+export function HTML({ html, status, headers }: HTMLProps): React.ReactElement {
   return Response({ html, status, headers });
 }
 
@@ -85,7 +77,10 @@ interface RedirectProps {
   status?: number;
 }
 
-export function Redirect({ to, status = 302 }: RedirectProps): APIJSX.Element {
+export function Redirect({
+  to,
+  status = 302,
+}: RedirectProps): React.ReactElement {
   return Response({ redirect: to, status });
 }
 

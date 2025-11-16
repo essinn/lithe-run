@@ -3,7 +3,7 @@ import { watch } from "fs";
 import cors from "cors";
 import { join, resolve } from "path";
 import { readdirSync, existsSync } from "fs";
-import { JSXElement } from ".";
+import { ReactNode } from "react";
 
 let routeContext: {
   req: Request;
@@ -81,7 +81,7 @@ function walk(dir: string, urlPrefix = ""): void {
   }
 }
 
-export function serve(rootElement: JSXElement) {
+export function serve(rootElement: ReactNode) {
   if (rootElement && typeof rootElement === "object") {
     const props = (rootElement as any).props || {};
     appConfig.port = props.port || 6969;
