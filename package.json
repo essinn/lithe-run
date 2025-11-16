@@ -4,13 +4,11 @@
   "description": "React-style backend framework for building APIs with JSX",
   "private": true,
   "workspaces": [
-    "packages/*",
-    "examples/*"
+    "packages/*"
   ],
   "scripts": {
-    "build": "npm run build --workspace=packages/react-serve-js --workspace=packages/create-react-serve",
-    "dev": "npm run dev --workspace=examples/basic",
-    "publish": "npm run build && npm publish --workspaces --exclude=react-serve-basic-example",
+    "build": "npm run build --workspace=packages/lithe-up --workspace=packages/lithe-run",
+    "publish": "npm run build && npm publish --workspaces",
     "test": "npm run test --workspaces"
   },
   "author": "Essinn",
