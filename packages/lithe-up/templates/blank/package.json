@@ -1,7 +1,7 @@
 {
-  "name": "my-react-serve-app",
+  "name": "my-api",
   "version": "1.0.0",
-  "description": "A ReactServe application",
+  "description": "A Lithejs application",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
@@ -10,14 +10,14 @@
     "typecheck": "tsc --noEmit"
   },
   "keywords": [
-    "react-serve",
+    "lithejs",
     "api",
     "backend"
   ],
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "react-serve-js": "^0.6.0",
+    "lithejs": "^0.1.0",
     "react": "^19.1.1"
   },
   "devDependencies": {

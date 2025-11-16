@@ -5,74 +5,52 @@ export {
   useContext,
   type Middleware as MiddlewareFunction,
 } from "./runtime";
-import React from "react";
+
 import type { CorsOptions } from "cors";
 
+namespace APIJSX {
+  export interface Element {
+    type: string;
+    props: any;
+  }
+}
+
+export type JSXElement = APIJSX.Element;
+
 export function App({
-  children,
+  children, // ignored
   port,
   cors,
 }: {
-  children: any;
+  children?: any;
   port?: number;
   cors?: boolean | CorsOptions;
-}): React.ReactElement {
+}): APIJSX.Element {
   return { type: "App", props: { children, port, cors } } as any;
 }
 
-export function Route({
-  children,
-  path,
-  method,
-  middleware,
-}: {
-  children: any;
-  path: string;
-  method: string;
-  middleware?:
-    | import("./runtime").Middleware
-    | import("./runtime").Middleware[];
-}): React.ReactElement {
-  return {
-    type: "Route",
-    props: { children, path, method, middleware },
-  } as any;
+interface BackendElement {
+  type: string;
+  props: Record<string, any>;
 }
 
-export function Response({
-  json,
-  status,
-  text,
-  html,
-  headers,
-  redirect,
-}: {
+interface ResponseProps {
   json?: any;
   status?: number;
   text?: string;
   html?: string;
   headers?: Record<string, string>;
   redirect?: string;
-}): React.ReactElement {
-  return { type: "Response", props: { json, status, text, html, headers, redirect } } as any;
+}
+
+export function Response(props: ResponseProps): BackendElement {
+  return { type: "Response", props };
 }
 
 export function Middleware({
   use,
 }: {
-  use:
-    | import("./runtime").Middleware
-    | import("./runtime").Middleware[];
-}): React.ReactElement {
+  use: import("./runtime").Middleware | import("./runtime").Middleware[];
+}): APIJSX.Element {
   return { type: "Middleware", props: { use } } as any;
-}
-
-export function RouteGroup({
-  children,
-  prefix,
-}: {
-  children: any;
-  prefix?: string;
-}): React.ReactElement {
-  return { type: "RouteGroup", props: { children, prefix } } as any;
 }

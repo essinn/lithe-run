@@ -1,5 +1,5 @@
 {
-  "name": "lithe-run",
+  "name": "lithejs",
   "version": "0.1.0",
   "description": "React-style backend framework for building APIs with JSX",
   "main": "dist/index.js",

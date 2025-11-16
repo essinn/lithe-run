@@ -11,7 +11,7 @@ const rl = readline.createInterface({
 });
 
 function ask(question: string): Promise<string> {
-  return new Promise((resolve) => {
+  return new Promise(resolve => {
     rl.question(question, resolve);
   });
 }
@@ -21,10 +21,10 @@ async function getLatestVersion(packageName: string): Promise<string> {
     const url = `https://registry.npmjs.org/${packageName}/latest`;
 
     const request = https
-      .get(url, (res) => {
+      .get(url, res => {
         let data = "";
 
-        res.on("data", (chunk) => {
+        res.on("data", chunk => {
           data += chunk;
         });
 
@@ -41,7 +41,7 @@ async function getLatestVersion(packageName: string): Promise<string> {
           }
         });
       })
-      .on("error", (error) => {
+      .on("error", error => {
         reject(error);
       });
 
@@ -58,11 +58,6 @@ const TEMPLATES = {
     name: "Basic",
     description: "REST API with user endpoints (recommended for beginners)",
   },
-  auth: {
-    name: "Auth",
-    description:
-      "Complete authentication system with JWT, Prisma, and user management",
-  },
   blank: {
     name: "Blank",
     description: "Minimal starter template",
@@ -76,7 +71,7 @@ async function selectTemplate(): Promise<string> {
     type: "select",
     name: "template",
     message: "Select a template:",
-    choices: templateKeys.map((key) => ({
+    choices: templateKeys.map(key => ({
       title: `${TEMPLATES[key].name} - ${TEMPLATES[key].description}`,
       value: key,
     })),
@@ -88,8 +83,8 @@ async function selectTemplate(): Promise<string> {
   }
 
   // If cancelled, default to basic
-  console.log("\nNo template selected. Using 'basic' template.");
-  return "basic";
+  console.log("\nNo template selected. Using 'blank' template.");
+  return "blank";
 }
 
 async function askLanguagePreference(): Promise<void> {
@@ -111,10 +106,7 @@ async function askLanguagePreference(): Promise<void> {
   // Continue regardless - it's just a joke!
 }
 
-export async function createReactServeApp(
-  projectName?: string,
-  template?: string,
-) {
+export async function litheUp(projectName?: string, template?: string) {
   try {
     // Get project name if not provided
     if (!projectName) {
@@ -131,7 +123,7 @@ export async function createReactServeApp(
     // Check if directory already exists
     if (existsSync(projectPath)) {
       const overwrite = await ask(
-        `Directory "${projectName}" already exists. Overwrite? (y/N): `,
+        `Directory "${projectName}" already exists. Overwrite? (y/N): `
       );
       if (
         overwrite.toLowerCase() !== "y" &&
@@ -150,31 +142,29 @@ export async function createReactServeApp(
     // Fun easter egg!
     await askLanguagePreference();
 
-    console.log(`\n🚀 Creating ReactServe app in ${projectPath}...\n`);
+    console.log(`\n🚀 Creating Lithe app in ${projectPath}...\n`);
 
     // Create project directory
     await mkdir(projectPath, { recursive: true });
 
-    // Get latest version of react-serve-js
-    console.log("📦 Fetching latest version of react-serve-js...");
+    console.log("📦 Fetching latest version of lithejs...");
     let latestVersion: string;
     try {
-      latestVersion = await getLatestVersion("react-serve-js");
+      latestVersion = await getLatestVersion("lithejs");
       console.log(`✅ Latest version: ${latestVersion}\n`);
     } catch (error) {
       console.warn(
-        "⚠️  Could not fetch latest version, using fallback version 0.6.0",
+        "⚠️  Could not fetch latest version, using fallback version 0.6.0"
       );
       console.warn(
-        `    Error: ${error instanceof Error ? error.message : String(error)}`,
+        `    Error: ${error instanceof Error ? error.message : String(error)}`
       );
-      latestVersion = "0.6.0";
+      latestVersion = "0.1.0";
     }
 
     // Copy template files
     await copyTemplate(template, projectPath);
 
-    // Update package.json with project name and latest react-serve-js version
     await updatePackageJson(projectPath, projectName, latestVersion);
 
     console.log("✅ Project created successfully!\n");
@@ -228,16 +218,15 @@ async function copyDirectory(src: string, dest: string) {
 async function updatePackageJson(
   projectPath: string,
   projectName: string,
-  latestVersion: string,
+  latestVersion: string
 ) {
   const packageJsonPath = join(projectPath, "package.json");
   const packageJson = JSON.parse(await readFile(packageJsonPath, "utf8"));
 
   packageJson.name = projectName;
 
-  // Update react-serve-js to the latest version
-  if (packageJson.dependencies && packageJson.dependencies["react-serve-js"]) {
-    packageJson.dependencies["react-serve-js"] = `^${latestVersion}`;
+  if (packageJson.dependencies && packageJson.dependencies["lithejs"]) {
+    packageJson.dependencies["lithejs"] = `^${latestVersion}`;
   }
 
   await writeFile(packageJsonPath, JSON.stringify(packageJson, null, 2));
